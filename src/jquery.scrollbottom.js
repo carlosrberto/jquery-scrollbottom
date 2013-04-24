@@ -2,32 +2,21 @@
 * jQuery scrollBottom
 * https://github.com/carlosrberto/jquery-scrollbottom
 *
-* Copyright (c) 2012 Carlos Roberto Gomes Junior
+* Copyright (c) 2013 Carlos Roberto Gomes Junior
 * Licensed under a Creative Commons Attribution 3.0 License
 * http://creativecommons.org/licenses/by-sa/3.0/
 *
-* Version: 0.1.1
+* Version: 1.0.0
 */
 
-// simple scrollend Event
-$(function(){
-    var scrollTimer;
-    $(window).on('scroll', function() {
-        clearTimeout( scrollTimer );
-        scrollTimer = setTimeout( function(){
-            $(window).trigger('scrollBottom.scrollend');
-        }, 200);
-    });          
-});
-
 (function($) {
+
     var defaults = {
         offsetY : 0,
         callback: function() {}
     };
     
     function ScrollBottom (win, options) {
-
         // plugin options
         if ( options ) {
             // extend options
@@ -36,11 +25,11 @@ $(function(){
             // use default options
             this.options = defaults;
         }
-
+        this.win = win;
         this.scrollTop = $(document).scrollTop();
         this.pageHeight = $(document).height() - $(window).height();
         if ( win === window ) {
-            $(win).on('scrollBottom.scrollend', $.proxy(this.scrollHandler, this));
+            $(win).on('scrollend.sb', $.proxy(this.scrollHandler, this));
         }
 
     }
@@ -50,13 +39,29 @@ $(function(){
         this.scrollTop = $(document).scrollTop();
         this.pageHeight = $(document).height() - $(window).height();
         if ( this.scrollTop >= this.pageHeight+this.options.offsetY && typeof this.options.callback === 'function' ) {
-            this.options.callback.apply(this, [event, {'scrollTop':this.scrollTop, 'pageHeight':this.pageHeight, 'direction' : direction}]);
+            $(this.win).trigger('scrollBottom', [direction, this.scrollTop, this.pageHeight]);
         }
-    };
+    };    
 
-    $.fn.scrollBottom = function(options) {
-        this.each(function() {
-            new ScrollBottom(this, options);
-        });
+    $.event.special.scrollBottom = {
+        setup: function( data, namespaces, eventHandle ) {
+            var el = this;
+            var scrollTimer;
+            $(el).on('scroll.sb', function() {
+                clearTimeout( scrollTimer );
+                scrollTimer = setTimeout( function(){
+                    $(el).trigger('scrollend.sb');
+                }, 200);
+            });
+        },
+
+        teardown: function( namespaces ) {
+            $(window).off('.sb');
+        },
+
+        add: function( handleObj ) {
+            var options = ( typeof handleObj.data === "object" ) ? handleObj.data : {};
+            var sb = new ScrollBottom(this, options);
+        }
     };
 })(jQuery);

@@ -1,6 +1,6 @@
 # jQuery scrollBottom
 
-A plugin that triggers an event when the user reaches the bottom of the pag
+A plugin that triggers an event when the user reaches the bottom of the page
 
 ## How to use
 

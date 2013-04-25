@@ -1,0 +1,36 @@
+{
+    "name": "scrollbottom",
+    "title": "jQuery scrollbottom",
+    "description": "A plugin that triggers an event when the user reaches the bottom of the page",
+    "keywords": [
+        "window",
+        "scroll",
+        "bottom",
+        "event"
+    ],
+    "version": "1.0.0",
+    "author": {
+        "name": "Carlos Roberto Gomes Junior",
+        "url": "http://carlosroberto.name/"
+    },
+    "maintainers": [
+        {
+            "name": "Carlos Roberto Gomes Junior",
+            "email": "carlos.rberto@gmail.com",
+            "url": "http://carlosroberto.name/"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "Creative Commons Attribution 3.0 License",
+            "url": "http://creativecommons.org/licenses/by-sa/3.0/"
+        }
+    ],
+    "bugs": "https://github.com/carlosrberto/jquery-scrollbottom/issues",
+    "homepage": "http://carlosrberto.github.com/jquery-scrollbottom/",
+    "docs": "http://carlosrberto.github.com/jquery-scrollbottom/",
+    "download": "https://github.com/carlosrberto/jquery-scrollbottom/tags",
+    "dependencies": {
+        "jquery": ">=1.7"
+    }
+}
